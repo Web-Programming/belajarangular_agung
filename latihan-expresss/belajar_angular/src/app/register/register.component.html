@@ -1,43 +1,39 @@
-<section class="register">
-  <h1 class="auth-heading">Register to our platform</h1>
-  <div class="alert-danger" *ngIf="formError">{{formError}}</div>
-  <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
-    <label for="name">Name</label>
-    <input type="text" id="name" formControlName="name" placeholder="Input your name">
-    <div
-        *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-        class="alert-danger"
-      >
-      <div class="alert-danger" *ngIf="name?.errors?.['required']">Name is required.</div>
-      <div class="alert-danger" *ngIf="name?.errors?.['minlength']">
-        Name must be at least 2 characters long.
-      </div>
+<form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
+  <div>
+    <label for="name">Nama:</label>
+    <input id="name" formControlName="name" />
+    <div *ngIf="name?.invalid && name?.touched">
+      <small *ngIf="name?.hasError('required')">Nama wajib diisi</small>
+      <small *ngIf="name?.hasError('minlength')">Nama harus lebih dari 2 karakter</small>
     </div>
+  </div>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" formControlName="email" placeholder="Input your email">
-    <div
-        *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-        class="alert-danger"
-      >
-      <div class="alert-danger" *ngIf="email?.errors?.['required']">Email is required.</div>
-      <div class="alert-danger" *ngIf="email?.errors?.['email']">
-        Email must be a valid email address
-      </div>
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" formControlName="email" />
+    <div *ngIf="email?.invalid && email?.touched">
+      <small *ngIf="email?.hasError('required')">Email wajib diisi</small>
+      <small *ngIf="email?.hasError('email')">Format email tidak valid</small>
     </div>
+  </div>
 
-
-    <label for="password">Password</label>
-    <input type="password" id="password" formControlName="password" placeholder="Input your password">
-    <div
-        *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-        class="alert-danger"
-      >
-      <div class="alert-danger" *ngIf="password?.errors?.['required']">Password is required.</div>
-      <div class="alert-danger" *ngIf="password?.errors?.['minlength']">
-        Name must be at least 6 characters long.
-      </div>
+  <div>
+    <label for="password">Password:</label>
+    <input id="password" formControlName="password" type="password" />
+    <div *ngIf="password?.invalid && password?.touched">
+      <small *ngIf="password?.hasError('required')">Password wajib diisi</small>
+      <small *ngIf="password?.hasError('minlength')">Password harus lebih dari 6 karakter</small>
     </div>
-    <button type="submit" class="primary" [disabled]="registerForm.invalid">Register</button>
-  </form>
-</section>
+  </div>
+
+  <div *ngIf="formError" style="color: red;">
+    <p>{{ formError }}</p>
+  </div>
+
+  <div *ngIf="formSuccess" style="color: green;">
+    <p>{{ formSuccess }}</p>
+  </div>
+
+  <button type="submit">Register</button>
+</form>
+
